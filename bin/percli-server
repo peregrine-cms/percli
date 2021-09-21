@@ -1,3 +1,11 @@
 #!/usr/bin/env node
 
-console.log('Not yet implemented')
+const args = require('commander')
+
+args.version('1.0.0')
+  .command('install', 'install peregrine')
+  .command('register', 'register server')
+  .command('start', 'start peregrine')
+  .command('stop', 'stop peregrine')
+  .command('list', 'list all peregrine servers')
+  .parse(process.argv)

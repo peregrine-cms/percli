@@ -10,6 +10,8 @@
     "percli": "bin/percli",
     "percli-server": "bin/percli-server",
     "percli-server-install": "bin/percli-server-install",
+    "percli-server-list": "bin/percli-server-list",
+    "percli-server-register": "bin/percli-server-register",
     "percli-server-start": "bin/percli-server-start",
     "percli-server-stop": "bin/percli-server-stop"
   },
