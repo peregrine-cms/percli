@@ -4,6 +4,7 @@ const args = require('commander')
 const semver = require('semver')
 
 const minNodeVer = '14.0.0'
+
 if (semver.satisfies(semver.clean(process.version), `>=${minNodeVer}`)) {
   args.version(require('../package.json').version)
   .usage('<command> [options]')
@@ -18,5 +19,5 @@ if (semver.satisfies(semver.clean(process.version), `>=${minNodeVer}`)) {
 } else {
   console.log(`[ERROR] percli requires nodejs version ${minNodeVer} or greater`)
   console.log(`[ERROR] You are running version: ${process.version}`)
-  process.exitCode = 1;
+  process.exitCode = -1;
 }
