@@ -1,0 +1,25 @@
+{
+  "name": "percli",
+  "version": "1.0.0",
+  "description": "peregrine-cms cli tool",
+  "main": "bin/percli",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/peregrine-cms/percli.git"
+  },
+  "keywords": [
+    "cms",
+    "sling",
+    "vuejs",
+    "peregrine-cms"
+  ],
+  "author": "peregrine-cms",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/peregrine-cms/percli/issues"
+  },
+  "homepage": "https://github.com/peregrine-cms/percli#readme"
+}
