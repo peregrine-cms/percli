@@ -18,7 +18,7 @@ the following tools need to be installed and accessible for percli to be able to
 
 - Java 11
 - Sling 11
-- Maven3.6+ to use percli compile
+- Maven 3.6+ to use percli compile
 - NodeJS 14.16.0 (LTS)
 
 ### install percli

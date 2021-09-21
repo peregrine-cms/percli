@@ -7,7 +7,11 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "bin": {
-    "percli": "bin/percli"
+    "percli": "bin/percli",
+    "percli-server": "bin/percli-server",
+    "percli-server-install": "bin/percli-server-install",
+    "percli-server-start": "bin/percli-server-start",
+    "percli-server-stop": "bin/percli-server-stop"
   },
   "engines": {
     "node": ">=14"
