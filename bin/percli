@@ -1,3 +1,22 @@
 #!/usr/bin/env node
 
-console.log('Not yet implemented')
+const args = require('commander')
+const semver = require('semver')
+
+const minNodeVer = '14.0.0'
+if (semver.satisfies(semver.clean(process.version), `>=${minNodeVer}`)) {
+  args.version(require('../package.json').version)
+  .usage('<command> [options]')
+  .command('check', 'hepful checks')
+  .command('server', 'server specific commands')
+  .command('create', 'dev tasks')
+  .command('compile', 'compile tasks')
+  .command('htmltovue', 'convert html to vue using htmltovue.js in the fragments folder')
+  .command('hatch', 'convert html to vue using htmltovue.js in the fragments folder')
+  .command('hatchobject', 'convert dialog and model objects using htmltovue.js in the objects folder')
+  .parse(process.argv)
+} else {
+  console.log(`[ERROR] percli requires nodejs version ${minNodeVer} or greater`)
+  console.log(`[ERROR] You are running version: ${process.version}`)
+  process.exitCode = 1;
+}
