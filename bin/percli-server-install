@@ -1,10 +1,20 @@
 #!/usr/bin/env node
-const { getDistributionArtifactsList } = require('../lib/DistributionHelper')
+const { getDistroArtifactList } = require('../lib/DistributionHelper')
+const { progressDownload } = require('../lib/Download')
 
-async function fetchArtifacts() {
-  const packages = await getDistributionArtifactsList()
-  console.log(packages)
-  console.log('Implementation in progress')
+async function serverInstall() {
+
+  let distroFiles = await getDistroArtifactList()
+
+  console.log('Fetching core distribution')
+  for (url of distroFiles.core) {
+    await progressDownload(url)
+  }
+
+  console.log('Fetching packages')
+  for (url of distroFiles.pkgs) {
+    await progressDownload(url)
+  }
 }
 
-fetchArtifacts()
+serverInstall()

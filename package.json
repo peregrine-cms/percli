@@ -36,7 +36,9 @@
   "homepage": "https://github.com/peregrine-cms/percli#readme",
   "dependencies": {
     "axios": "^0.21.4",
+    "cli-progress": "^3.9.1",
     "commander": "^8.2.0",
+    "request": "^2.88.2",
     "semver": "^7.3.5"
   }
 }
