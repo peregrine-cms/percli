@@ -1,20 +1,50 @@
 #!/usr/bin/env node
+const fs = require('fs')
+const { spawn, spawnSync } = require('child_process')
+
 const { getDistroArtifactList } = require('../lib/DistributionHelper')
 const { progressDownload } = require('../lib/Download')
+const config = require('../config')
 
 async function serverInstall() {
 
-  let distroFiles = await getDistroArtifactList()
+  // todo: check for existing installation
 
-  console.log('Fetching core distribution')
-  for (url of distroFiles.core) {
-    await progressDownload(url)
+  // step 1 - get list of distribution files and download
+  if (!fs.existsSync(config.download.dir)){
+    let distroFiles = await getDistroArtifactList()
+
+    console.log('Fetching core distribution')
+    for (url of distroFiles.core) {
+      await progressDownload(url)
+    }
+
+    console.log('Fetching packages')
+    for (url of distroFiles.pkgs) {
+      await progressDownload(url)
+    }
   }
 
-  console.log('Fetching packages')
-  for (url of distroFiles.pkgs) {
-    await progressDownload(url)
+  // step 2 - create sling dir
+  if (!fs.existsSync(config.sling.dir)){
+    fs.mkdirSync(config.sling.dir)
   }
+
+  // step 3 - start sling
+  const args = []
+  args.push(`-jar ${config.download.dir}/org.apache.sling.feature.launcher.jar`)
+  args.push(`-D sling.runmodes=local`)
+  args.push(`-f ${config.download.dir}/com.peregrine-cms.sling.launchpad-12-SNAPSHOT-oak_tar_far.far`)
+  args.push(`-p ${config.sling.dir}`) 
+  args.push(`-c ${config.sling.dir}/launcher/cache`)
+
+  const child = spawn('java', args, {
+    detached: true,
+    shell: true,
+    stdio: 'inherit'
+  })
+  child.unref()
+
 }
 
 serverInstall()
