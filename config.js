@@ -4,7 +4,8 @@ const config = {
     dir: 'out',
   },
   sling: {
-    dir: 'sling'
+    dir: 'sling',
+    port: 8080
   }
 }
 

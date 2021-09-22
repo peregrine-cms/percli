@@ -3,14 +3,14 @@ const fs = require('fs')
 
 const { getDistroArtifactList } = require('../lib/DistributionHelper')
 const { progressDownload } = require('../lib/Download')
-const { startSling } = require('../lib/Server')
+const { installPackage, startSling, waitForSlingReady } = require('../lib/Server')
 const config = require('../config')
 
 async function serverInstall() {
 
   // step 1 - get list of distribution files and download
+  let distroFiles = await getDistroArtifactList()
   if (!fs.existsSync(config.download.dir)){
-    let distroFiles = await getDistroArtifactList()
 
     console.log('Fetching core distribution')
     for (url of distroFiles.core) {
@@ -31,6 +31,15 @@ async function serverInstall() {
   // step 3 - start sling
   startSling()
 
+  await waitForSlingReady(60000)
+
+  // step 4 - install packages
+  console.log('Install packages')
+  for (url of distroFiles.pkgs) {
+    let packageFile = url.substring(url.lastIndexOf('/')+1)
+    await installPackage(packageFile)
+    await waitForSlingReady(5000)
+  }
 }
 
 if (!fs.existsSync(config.sling.dir)) {
