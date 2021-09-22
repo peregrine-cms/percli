@@ -1,9 +1,9 @@
 #!/usr/bin/env node
 const fs = require('fs')
-const { spawn, spawnSync } = require('child_process')
 
 const { getDistroArtifactList } = require('../lib/DistributionHelper')
 const { progressDownload } = require('../lib/Download')
+const { startSling } = require('../lib/Server')
 const config = require('../config')
 
 async function serverInstall() {
@@ -29,19 +29,7 @@ async function serverInstall() {
   }
 
   // step 3 - start sling
-  const args = []
-  args.push(`-jar ${config.download.dir}/org.apache.sling.feature.launcher.jar`)
-  args.push(`-D sling.runmodes=local`)
-  args.push(`-f ${config.download.dir}/com.peregrine-cms.sling.launchpad-12-SNAPSHOT-oak_tar_far.far`)
-  args.push(`-p ${config.sling.dir}`) 
-  args.push(`-c ${config.sling.dir}/launcher/cache`)
-
-  const child = spawn('java', args, {
-    detached: true,
-    shell: true,
-    stdio: 'inherit'
-  })
-  child.unref()
+  startSling()
 
 }
 
