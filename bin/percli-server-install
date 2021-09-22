@@ -8,8 +8,6 @@ const config = require('../config')
 
 async function serverInstall() {
 
-  // todo: check for existing installation
-
   // step 1 - get list of distribution files and download
   if (!fs.existsSync(config.download.dir)){
     let distroFiles = await getDistroArtifactList()
@@ -47,4 +45,8 @@ async function serverInstall() {
 
 }
 
-serverInstall()
+if (!fs.existsSync(config.sling.dir)) {
+  serverInstall()
+} else {
+  console.log(`Installation already exists at '${config.sling.dir}'. Exiting.`)
+}
