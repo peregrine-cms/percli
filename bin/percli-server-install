@@ -1,3 +1,10 @@
 #!/usr/bin/env node
+const { getDistributionArtifactsList } = require('../lib/DistributionHelper')
 
-console.log('Not yet implemented')
+async function fetchArtifacts() {
+  const packages = await getDistributionArtifactsList()
+  console.log(packages)
+  console.log('Implementation in progress')
+}
+
+fetchArtifacts()
