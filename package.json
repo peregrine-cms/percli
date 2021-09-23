@@ -13,7 +13,8 @@
     "percli-server-list": "bin/percli-server-list",
     "percli-server-register": "bin/percli-server-register",
     "percli-server-start": "bin/percli-server-start",
-    "percli-server-stop": "bin/percli-server-stop"
+    "percli-server-stop": "bin/percli-server-stop",
+    "percli-server-status": "bin/percli-server-status"
   },
   "engines": {
     "node": ">=14"

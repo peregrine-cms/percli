@@ -1,0 +1,8 @@
+#!/usr/bin/env node
+
+const { isSlingRunning, getPid } = require('../lib/Server')
+const config = require('../config')
+
+const pid = getPid()
+const status = isSlingRunning() ? `Server is running with pid: ${pid}` : 'Server is not running'
+console.log(status)
