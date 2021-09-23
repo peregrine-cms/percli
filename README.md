@@ -35,3 +35,17 @@ percli server install
 ```
 percli server start
 ```
+
+### stop a running peregrine-cms instance
+
+```
+percli server stop
+```
+
+### check if a peregrine-cms instance is running
+
+```
+percli server status
+```
+
+
