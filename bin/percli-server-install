@@ -31,7 +31,7 @@ async function serverInstall() {
   // step 3 - start sling
   startSling()
 
-  await waitForSlingReady(60000)
+  await waitForSlingReady(30000)
 
   // step 4 - install packages
   console.log('Install packages')
