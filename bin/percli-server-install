@@ -4,9 +4,12 @@ const fs = require('fs')
 const { getDistroArtifactList } = require('../lib/DistributionHelper')
 const { progressDownload } = require('../lib/Download')
 const { installPackage, startSling, waitForSlingReady } = require('../lib/Server')
+const { peregrineBanner } = require('../lib/Banner')
 const config = require('../config')
 
 async function serverInstall() {
+
+  peregrineBanner()
 
   // step 1 - get list of distribution files and download
   let distroFiles = await getDistroArtifactList()
