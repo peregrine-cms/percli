@@ -9,7 +9,11 @@ const config = {
   sling: {
     dir: 'sling',
     port: 8080,
-    pid: 'sling.pid'
+    pid: 'sling.pid',
+    default: {
+      port: 8080,
+      serverName: 'sling' 
+    }
   },
   server: {
     settings: path.join(os.homedir(), '.perclirc')
