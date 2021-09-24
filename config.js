@@ -1,6 +1,6 @@
 const config = {
   download: {
-    url: 'https://raw.githubusercontent.com/wiki/peregrine-cms/percli/percli-server-install-script.md',
+    url: 'https://raw.githubusercontent.com/wiki/peregrine-cms/percli/percli-server-install-script-for-kickstarter.md',
     dir: 'out',
   },
   sling: {
