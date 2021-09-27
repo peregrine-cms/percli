@@ -9,6 +9,6 @@ args.version('1.0.0')
   .parse(process.argv)
 
 const options = args.opts();
-let instanceName = options.name ? options.name : config.sling.default.serverInstance
+let instanceName = options.name ? options.name : config.sling.default.instanceName
 
 stopSling(instanceName)
