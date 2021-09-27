@@ -1,6 +1,17 @@
 #!/usr/bin/env node
+const args = require('commander')
 
 const { stopSling } = require('../lib/Server')
 const config = require('../config')
 
-stopSling()
+// todo: refactor - remove dups in server args
+args.version('1.0.0')
+  .option('-p, --port [port]', 'run server on port')
+  .option('-n, --name [name]', 'list all peregrine servers')
+  .parse(process.argv)
+
+const options = args.opts();
+let port = options.port ? options.port : config.sling.default.port
+let instanceName = options.name ? options.name : config.sling.default.serverName
+
+stopSling(instanceName)

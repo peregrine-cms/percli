@@ -1,8 +1,19 @@
 #!/usr/bin/env node
+const args = require('commander')
 
 const { isSlingRunning, getPid } = require('../lib/Server')
 const config = require('../config')
 
-const pid = getPid()
-const status = isSlingRunning() ? `Server is running with pid: ${pid}` : 'Server is not running'
+// todo: refactor - remove dups in server args
+args.version('1.0.0')
+  .option('-p, --port [port]', 'run server on port')
+  .option('-n, --name [name]', 'list all peregrine servers')
+  .parse(process.argv)
+
+const options = args.opts();
+let port = options.port ? options.port : config.sling.default.port
+let instanceName = options.name ? options.name : config.sling.default.serverName
+
+const pid = getPid(instanceName)
+const status = isSlingRunning(instanceName) ? `Server is running with pid: ${pid}` : 'Server is not running'
 console.log(status)

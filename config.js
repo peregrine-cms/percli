@@ -7,8 +7,6 @@ const config = {
     dir: 'out',
   },
   sling: {
-    dir: 'sling',
-    port: 8080,
     pid: 'sling.pid',
     default: {
       port: 8080,

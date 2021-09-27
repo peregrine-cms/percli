@@ -4,7 +4,7 @@ const args = require('commander')
 
 const { getDistroArtifactList } = require('../lib/DistributionHelper')
 const { progressDownload } = require('../lib/Download')
-const { installPackage, startSling, waitForSlingReady } = require('../lib/Server')
+const { createInstallDir, installPackage, startSling, waitForSlingReady } = require('../lib/Server')
 const { peregrineBanner } = require('../lib/Banner')
 const config = require('../config')
 
@@ -19,7 +19,8 @@ let serverName = options.name ? options.name : config.sling.default.serverName
 
 async function serverInstall() {
 
- console.log(`[INFO] installing server with name '${serverName}' on port '${port}'`)
+  createInstallDir(serverName)
+  console.log(`[INFO] installing server with name '${serverName}' on port '${port}'`)
 
   // step 1 - get list of distribution files and download
   let distroFiles = await getDistroArtifactList()
@@ -36,27 +37,16 @@ async function serverInstall() {
     }
   }
 
-  // step 2 - create sling dir
-  if (!fs.existsSync(config.sling.dir)){
-    fs.mkdirSync(config.sling.dir)
-  }
-
-  // step 3 - start sling
-  startSling()
+  startSling(serverName)
 
   await waitForSlingReady(30000)
 
-  // step 4 - install packages
   console.log('Install packages')
   for (url of distroFiles.pkgs) {
     let packageFile = url.substring(url.lastIndexOf('/')+1)
-    await installPackage(packageFile)
+    await installPackage(packageFile, port)
     await waitForSlingReady(5000)
   }
 }
 
-if (!fs.existsSync(config.sling.dir)) {
-  serverInstall()
-} else {
-  console.log(`Installation already exists at '${config.sling.dir}'. Exiting.`)
-}
+serverInstall()
