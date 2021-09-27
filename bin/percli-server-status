@@ -4,14 +4,11 @@ const args = require('commander')
 const { isSlingRunning, getPid } = require('../lib/Server')
 const config = require('../config')
 
-// todo: refactor - remove dups in server args
 args.version('1.0.0')
-  .option('-p, --port [port]', 'run server on port')
-  .option('-n, --name [name]', 'list all peregrine servers')
+  .option('-n, --name [name]', 'instance name')
   .parse(process.argv)
 
 const options = args.opts();
-let port = options.port ? options.port : config.sling.default.port
 let instanceName = options.name ? options.name : config.sling.default.serverName
 
 const pid = getPid(instanceName)

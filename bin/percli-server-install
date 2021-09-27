@@ -4,23 +4,30 @@ const args = require('commander')
 
 const { getDistroArtifactList } = require('../lib/DistributionHelper')
 const { progressDownload } = require('../lib/Download')
-const { createInstallDir, installPackage, startSling, waitForSlingReady } = require('../lib/Server')
+const { addServer, createInstallDir, installPackage, serverExists, startSling, waitForSlingReady } = require('../lib/Server')
 const { peregrineBanner } = require('../lib/Banner')
 const config = require('../config')
 
 args.version('1.0.0')
   .option('-p, --port [port]', 'run server on port')
-  .option('-n, --name [name]', 'list all peregrine servers')
+  .option('-n, --name [name]', 'instance name')
   .parse(process.argv)
 
 const options = args.opts();
 let port = options.port ? options.port : config.sling.default.port
-let serverName = options.name ? options.name : config.sling.default.serverName
+let instanceName = options.name ? options.name : config.sling.default.instanceName
 
 async function serverInstall() {
 
-  createInstallDir(serverName)
-  console.log(`[INFO] installing server with name '${serverName}' on port '${port}'`)
+  if (serverExists(instanceName)) {
+    console.error(`'Server configuration already exists for ${instanceName}'`)
+    process.exit(-1)
+  } 
+  console.log(`intance name = ${instanceName}`)
+  addServer(instanceName, port, process.cwd())
+  createInstallDir(instanceName)
+
+  console.log(`[INFO] installing server with name '${instanceName}' on port '${port}'`)
 
   // step 1 - get list of distribution files and download
   let distroFiles = await getDistroArtifactList()
@@ -37,7 +44,7 @@ async function serverInstall() {
     }
   }
 
-  startSling(serverName)
+  startSling(instanceName)
 
   await waitForSlingReady(30000)
 

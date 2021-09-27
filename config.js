@@ -10,7 +10,7 @@ const config = {
     pid: 'sling.pid',
     default: {
       port: 8080,
-      serverName: 'sling' 
+      instanceName: 'sling' 
     }
   },
   server: {
