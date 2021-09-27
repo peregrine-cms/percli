@@ -9,8 +9,8 @@ args.version('1.0.0')
   .parse(process.argv)
 
 const options = args.opts();
-let instanceName = options.name ? options.name : config.sling.default.serverName
+let instanceName = options.name ? options.name : config.sling.default.instanceName
 
 const pid = getPid(instanceName)
-const status = isSlingRunning(instanceName) ? `Server is running with pid: ${pid}` : 'Server is not running'
+const status = isSlingRunning(instanceName) ? `Server instance '${instanceName}' is running with pid: ${pid}` : `Server '${instanceName}' is not running`
 console.log(status)
