@@ -4,7 +4,8 @@ const args = require('commander')
 
 const { getDistroArtifactList } = require('../lib/DistributionHelper')
 const { progressDownload } = require('../lib/Download')
-const { addServer, createInstallDir, installPackage, serverExists, startSling, waitForSlingReady } = require('../lib/Server')
+const { addServer, createInstallDir, installPackage, serverExists, startSling } = require('../lib/Server')
+const { waitUntilBundlesReady, wait } = require('../lib/SlingHelper')
 const { peregrineBanner } = require('../lib/Banner')
 const config = require('../config')
 
@@ -48,13 +49,12 @@ async function serverInstall() {
 
   startSling(instanceName)
 
-  await waitForSlingReady(30000)
-
-  console.log('Install packages')
+  console.log('Installing packages')
+  await waitUntilBundlesReady(port)
   for (url of distroFiles.pkgs) {
     let packageFile = url.substring(url.lastIndexOf('/')+1)
+    await wait(1000)
     await installPackage(packageFile, port)
-    await waitForSlingReady(5000)
   }
 }
 
