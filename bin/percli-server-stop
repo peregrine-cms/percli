@@ -5,7 +5,7 @@ const { stopSling } = require('../lib/Server')
 const config = require('../config')
 
 args.version('1.0.0')
-  .option('-n, --name [name]', 'instance name')
+  .option('-n, --name [name]', `instance name (default: ${config.sling.default.instanceName})`)
   .parse(process.argv)
 
 const options = args.opts();

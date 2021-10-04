@@ -10,7 +10,7 @@ const config = {
     pid: 'sling.pid',
     default: {
       port: 8080,
-      instanceName: 'sling',
+      instanceName: 'peregrine-cms',
       host: 'localhost',
       user: 'admin',
       pass: 'admin'

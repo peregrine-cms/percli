@@ -11,7 +11,7 @@ const config = require('../config')
 
 args.version('1.0.0')
   .option('-p, --port [port]', 'run server on port')
-  .option('-n, --name [name]', 'instance name')
+  .option('-n, --name [name]', `instance name (default: ${config.sling.default.instanceName})`)
   .option('-r, --runmodes [runmodes]', 'comma delimited list of runmodes')
   .parse(process.argv)
 
