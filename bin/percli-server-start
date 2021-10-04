@@ -1,7 +1,8 @@
 #!/usr/bin/env node
 const args = require('commander')
 
-const { startSling } = require('../lib/Server')
+const { getPortForServer, startSling } = require('../lib/Server')
+const { isPortInUse } = require('../lib/Net')
 const config = require('../config')
 
 args.version('1.0.0')
@@ -11,4 +12,15 @@ args.version('1.0.0')
 const options = args.opts();
 let instanceName = options.name ? options.name : config.sling.default.instanceName
 
-startSling(instanceName)
+async function serverStart(instanceName) {
+
+  let port = getPortForServer(instanceName)
+  if (await isPortInUse(port)) {
+    console.error(`Can't start server instance '${instanceName}', port ${port} is already in use`)
+    process.exit(-1)
+  }
+
+  startSling(instanceName)
+}
+
+serverStart(instanceName)

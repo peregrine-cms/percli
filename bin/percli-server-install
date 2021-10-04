@@ -6,6 +6,7 @@ const { getDistroArtifactList } = require('../lib/DistributionHelper')
 const { progressDownload } = require('../lib/Download')
 const { addServer, createInstallDir, installPackage, serverExists, startSling } = require('../lib/Server')
 const { waitUntilBundlesReady, wait } = require('../lib/SlingHelper')
+const { isPortInUse } = require('../lib/Net')
 const { peregrineBanner } = require('../lib/Banner')
 const config = require('../config')
 
@@ -23,10 +24,15 @@ let runmodes = options.runmodes
 async function serverInstall() {
 
   if (serverExists(instanceName)) {
-    console.error(`'Server configuration already exists for ${instanceName}'`)
+    console.error(`Server configuration already exists for ${instanceName}`)
     process.exit(-1)
   } 
-  console.log(`intance name = ${instanceName}`)
+
+  if (await isPortInUse(port)) {
+    console.error(`Can't install server, port ${port} is already in use`)
+    process.exit(-1)
+  }
+
   addServer(instanceName, port, process.cwd(), runmodes)
   createInstallDir(instanceName)
 
