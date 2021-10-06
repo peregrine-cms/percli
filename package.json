@@ -1,6 +1,6 @@
 {
-  "name": "percli",
-  "version": "1.0.0",
+  "name": "@peregrine-cms/percli",
+  "version": "0.0.1",
   "description": "peregrine-cms cli tool",
   "main": "bin/percli",
   "scripts": {
@@ -14,7 +14,8 @@
     "percli-server-register": "bin/percli-server-register",
     "percli-server-start": "bin/percli-server-start",
     "percli-server-stop": "bin/percli-server-stop",
-    "percli-server-status": "bin/percli-server-status"
+    "percli-server-status": "bin/percli-server-status",
+    "percli-server-threads": "bin/percli-server-threads"
   },
   "engines": {
     "node": ">=14"
