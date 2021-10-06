@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 const fs = require('fs')
 const args = require('commander')
+const path = require('path')
 
 const { getDistroArtifactList } = require('../lib/DistributionHelper')
 const { progressDownload } = require('../lib/Download')
@@ -33,7 +34,8 @@ async function serverInstall() {
     process.exit(-1)
   }
 
-  addServer(instanceName, port, process.cwd(), runmodes)
+  let installPath = path.join(process.cwd(), instanceName)
+  addServer(instanceName, port, installPath, runmodes)
   createInstallDir(instanceName)
 
   console.log(`[INFO] installing server with name '${instanceName}' on port '${port}'`)
