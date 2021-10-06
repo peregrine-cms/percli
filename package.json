@@ -1,6 +1,6 @@
 {
   "name": "@peregrine-cms/percli",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "peregrine-cms cli tool",
   "main": "bin/percli",
   "scripts": {

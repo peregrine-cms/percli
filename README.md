@@ -21,7 +21,7 @@ the following tools need to be installed and accessible for percli to be able to
 
 ### install percli
 ```
-npm install percli -g
+npm install @peregrine-cms/percli -g
 ```
 
 ### install peregrine-cms
