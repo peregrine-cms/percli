@@ -1,0 +1,14 @@
+#!/usr/bin/env node
+const args = require('commander')
+
+const { threadsSling } = require('../lib/Server')
+const config = require('../config')
+
+args.version('1.0.0')
+  .option('-n, --name [name]', `instance name (default: ${config.sling.default.instanceName})`)
+  .parse(process.argv)
+
+const options = args.opts();
+let instanceName = options.name ? options.name : config.sling.default.instanceName
+
+threadsSling(instanceName)

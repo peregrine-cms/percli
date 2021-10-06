@@ -1,0 +1,17 @@
+#!/usr/bin/env node
+const args = require('commander')
+
+const { isSlingRunning, getPid, statusSling } = require('../lib/Server')
+const config = require('../config')
+
+args.version('1.0.0')
+  .option('-n, --name [name]', `instance name (default: ${config.sling.default.instanceName})`)
+  .parse(process.argv)
+
+const options = args.opts();
+let instanceName = options.name ? options.name : config.sling.default.instanceName
+
+const pid = getPid(instanceName)
+const status = isSlingRunning(instanceName) ? `Server instance '${instanceName}' is running with pid: ${pid}` : `Server '${instanceName}' is not running`
+console.log(status)
+statusSling(instanceName)

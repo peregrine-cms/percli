@@ -1,0 +1,67 @@
+#!/usr/bin/env node
+const fs = require('fs')
+const args = require('commander')
+
+const { getDistroArtifactList } = require('../lib/DistributionHelper')
+const { progressDownload } = require('../lib/Download')
+const { addServer, createInstallDir, installPackage, serverExists, startSling } = require('../lib/Server')
+const { waitUntilBundlesReady, wait } = require('../lib/SlingHelper')
+const { isPortInUse } = require('../lib/Net')
+const { peregrineBanner } = require('../lib/Banner')
+const config = require('../config')
+
+args.version('1.0.0')
+  .option('-p, --port [port]', 'run server on port')
+  .option('-n, --name [name]', `instance name (default: ${config.sling.default.instanceName})`)
+  .option('-r, --runmodes [runmodes]', 'comma delimited list of runmodes')
+  .parse(process.argv)
+
+const options = args.opts();
+let port = options.port ? options.port : config.sling.default.port
+let instanceName = options.name ? options.name : config.sling.default.instanceName
+let runmodes = options.runmodes
+
+async function serverInstall() {
+
+  if (serverExists(instanceName)) {
+    console.error(`Server configuration already exists for ${instanceName}`)
+    process.exit(-1)
+  } 
+
+  if (await isPortInUse(port)) {
+    console.error(`Can't install server, port ${port} is already in use`)
+    process.exit(-1)
+  }
+
+  addServer(instanceName, port, process.cwd(), runmodes)
+  createInstallDir(instanceName)
+
+  console.log(`[INFO] installing server with name '${instanceName}' on port '${port}'`)
+
+  // step 1 - get list of distribution files and download
+  let distroFiles = await getDistroArtifactList()
+  if (!fs.existsSync(config.download.dir)){
+
+    console.log('Fetching core distribution')
+    for (url of distroFiles.core) {
+      await progressDownload(url)
+    }
+
+    console.log('Fetching packages')
+    for (url of distroFiles.pkgs) {
+      await progressDownload(url)
+    }
+  }
+
+  startSling(instanceName)
+
+  console.log('Installing packages')
+  await waitUntilBundlesReady(port)
+  for (url of distroFiles.pkgs) {
+    let packageFile = url.substring(url.lastIndexOf('/')+1)
+    await wait(1000)
+    await installPackage(packageFile, port)
+  }
+}
+
+serverInstall()

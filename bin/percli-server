@@ -1,0 +1,12 @@
+#!/usr/bin/env node
+
+const args = require('commander')
+
+args.version('1.0.0')
+  .command('install', 'install peregrine')
+  .command('start', 'start peregrine')
+  .command('stop', 'stop peregrine')
+  .command('status', 'check is process is running')
+  .command('list', 'list all peregrine servers')
+  .command('threads', 'take a thread dump')
+  .parse(process.argv)

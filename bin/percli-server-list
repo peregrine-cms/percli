@@ -1,0 +1,4 @@
+#!/usr/bin/env node
+const { listServers } = require('../lib/Server')
+
+listServers()
