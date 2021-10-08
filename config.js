@@ -7,7 +7,6 @@ const config = {
     dir: 'out',
   },
   sling: {
-    pid: 'sling.pid',
     default: {
       port: 8080,
       instanceName: 'peregrine-cms',
