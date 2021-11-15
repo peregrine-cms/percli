@@ -8,6 +8,7 @@
   },
   "bin": {
     "percli": "bin/percli",
+    "percli-compile": "bin/percli-compile",
     "percli-server": "bin/percli-server",
     "percli-server-install": "bin/percli-server-install",
     "percli-server-list": "bin/percli-server-list",
