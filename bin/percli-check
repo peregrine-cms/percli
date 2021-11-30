@@ -1,0 +1,18 @@
+#!/usr/bin/env node
+const { execSync } = require('child_process')
+
+const getProxyArgs = () => {
+  let args = process.argv
+  args.shift() // remove node
+  args.shift() // remove command
+  return args.join(' ')
+}
+
+const proxyArgs = getProxyArgs()
+const proxyCmd = `npx --package=percli@0.1.43-alpha -- percli-check ${proxyArgs}`
+console.log(`Invoking command through proxy: ${proxyCmd}`)
+
+try {
+  execSync(proxyCmd, {stdio: 'inherit'})
+} catch (err) {
+}
