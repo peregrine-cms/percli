@@ -53,6 +53,21 @@ percli server status
 percli server list
 ```
 
+### perform checks
+
+show available checks.
+
+```
+percli check available
+```
+
+check installed versions of java and maven
+
+```
+percli check java
+percli check maven
+```
+
 ### running multiple instances
 
 multiple peregrine instances can be installed, started and stopped using the `--name` and `--port` parameters. 
